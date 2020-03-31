@@ -12,6 +12,6 @@ Application for saving training scores, based on Storyboard and SQLite.
 * FMDB
 
 ## Scenes_Preview
-![screenshot](./tmp/3.png) ![screenshot](./tmp/4.png)
-![screenshot](./tmp/1.png)
-![screenshot](./tmp/2.png)
+<img src="./tmp/3.png" width="45%"> <img src="./tmp/4.png" width="45%">
+<img src="./tmp/1.png" width="100%">
+<img src="./tmp/2.png" width="100%">
