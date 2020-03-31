@@ -2,14 +2,14 @@
 Application for saving training scores, based on Storyboard and SQLite. 
 
 ## Table of contents
-* [Technologies](#technologies)
-* [Results](#Results)
+* [Technologies](#Technologies)
+* [Scenes Preview](#ScenesPreview)
 
 ## Technologies
 * Swift
+* SQLite
+* FMDB
 
-
-## Results
-
-
-![screenshot](./tmp/1.PNG)
+## ScenesPreview
+![screenshot](./tmp/1.png)
+![screenshot](./tmp/2.png)
