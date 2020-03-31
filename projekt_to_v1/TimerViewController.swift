@@ -12,19 +12,52 @@ class TimerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func onOff(_ sender: UIButton) {
+        if (ison == false) {
+            ison=true
+            runTimer()
+        } else {
+            ison=false
+            stopTimer()
+        }
     }
-    */
+    
+    
+    @IBOutlet weak var timerDisplay: UILabel!
+    
+    @IBAction func slider(_ sender: UISlider) {
+        timerDisplay.text=String(Int(sender.value))
+        seconds=Int(sender.value)
+        slideval=Int(sender.value)
+    }
+    
+    
+    var timer = Timer()
+    var ison: Bool = false
+    var slideval: Int = 0
+    func runTimer() {
+         timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(TimerViewController.updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    func stopTimer() {
+        timer.invalidate()
+    }
+    
+    var seconds:Int = 120
+    @objc func updateTimer() {
+        if (seconds == 0){
+            stopTimer();
+            seconds=slideval
+            timerDisplay.text=String(slideval+1)
+            ison=false
+        }
+        seconds -= 1     //This will decrement(count down)the seconds.
+        timerDisplay.text = String(seconds)
+    }
+    
+
 
 }

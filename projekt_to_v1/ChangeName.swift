@@ -10,6 +10,29 @@ import UIKit
 
 class ChangeName: UIViewController {
 
+    @IBOutlet weak var textField: UITextField!
+    
+    @IBAction func confirm(_ sender: UIButton) {
+        DBManager.shared.updateExerName(old: exertit, insert: textField.text ?? "NULL")
+    }
+    
+    @IBAction func confirmDelete(_ sender: UIButton) {
+        DBManager.shared.deleteExercise(old: exertit)
+    }
+    
+    @IBOutlet weak var textFieldInsert: UITextField!
+    
+    @IBAction func confirminserting(_ sender: UIButton) {
+        DBManager.shared.insertExercise(insert: textFieldInsert.text ?? "NULL", exername: exertit)
+    }
+    
+    @IBOutlet weak var changeNameTextField: UITextField!
+    @IBAction func confirmChangingName(_ sender: UIButton) {
+        let q = DBManager.shared.selectTitleTrainingFromExercise(name: exertit)
+        DBManager.shared.updateTrainingName(old: q, insert: changeNameTextField.text ?? "NULL")
+    }
+    
+    var exertit = String()
     override func viewDidLoad() {
         super.viewDidLoad()
 

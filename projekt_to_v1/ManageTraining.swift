@@ -10,13 +10,49 @@ import UIKit
 
 class ManageTraining: UIViewController {
 
+    var sceneTitle: String = ""
+    @IBOutlet weak var sceneTitleLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        sceneTitleLabel.text=sceneTitle
+        
         // Do any additional setup after loading the view.
     }
     
+    
+    @IBAction func ManageButton(_ sender: UIButton) {
+        let sc = storyboard?.instantiateViewController(withIdentifier: "TrainingStructure") as? TrainingStructure
+        sc?.exertit=sceneTitle
+        self.navigationController?.pushViewController(sc!, animated: true)
+    }
+    
+    @IBAction func addButton(_ sender: UIButton) {
+        let sc = storyboard?.instantiateViewController(withIdentifier: "AddRecord") as? AddRecord
+        sc?.idTraining=sceneTitle
+        self.navigationController?.pushViewController(sc!, animated: true)
+    }
+    
+    @IBAction func statsButton(_ sender: UIButton) {
+        let sc = storyboard?.instantiateViewController(withIdentifier: "Statistics") as? Statistics
+        sc?.nameofTraining=sceneTitle
+        self.navigationController?.pushViewController(sc!, animated: true)
+    }
+    
+    @IBAction func showButton(_ sender: UIButton) {
+        let sc = storyboard?.instantiateViewController(withIdentifier: "DisplayTraining") as? DisplayTraining
+        sc?.idTraining=sceneTitle
+        self.navigationController?.pushViewController(sc!, animated: true)
+    }
+    
+    @IBAction func newExerciseAdd(_ sender: UIButton) {
+        let sc = storyboard?.instantiateViewController(withIdentifier: "newExerAddAlone") as? newExerAddAlone
+        sc?.titlle=sceneTitle
+        self.navigationController?.pushViewController(sc!, animated: true)
 
+    }
+    
+    
     /*
     // MARK: - Navigation
 

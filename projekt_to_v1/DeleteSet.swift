@@ -10,6 +10,11 @@ import UIKit
 
 class DeleteSet: UIViewController {
 
+    @IBOutlet weak var textField: UITextField!
+    @IBAction func confirmDelete(_ sender: UIButton) {
+        DBManager.shared.deleteSet(lol: lol, lol3: textField.text ?? "666")
+    }
+    var lol = String()
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -10,10 +10,30 @@ import UIKit
 
 class AddRecordExtension: UIViewController {
 
+    @IBOutlet weak var asd: UILabel!
+    @IBOutlet weak var qwe: UILabel!
+    @IBOutlet weak var rty: UILabel!
+    @IBOutlet weak var cvb: UILabel!
+    
+    @IBOutlet weak var exerTitle: UILabel!
+    @IBOutlet weak var numberofsetsField: UITextField!
+    @IBOutlet weak var weightField: UITextField!
+    @IBOutlet weak var repeatsField: UITextField!
+    @IBAction func confirmchanges(_ sender: UIButton) {
+        let id = DBManager.shared.selectIdFromExercise(name: exertit) 
+        let setnum = numberofsetsField.text ?? "NULL"
+        let wei = weightField.text ?? "NULL"
+        let rep = repeatsField.text ?? "NULL"
+        
+        let insert: String = "\(id),\(setnum),\(wei),\(rep)"
+        
+        DBManager.shared.insertRecordToSet(insert: insert)
+    }
+    
+    var exertit = String()
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        exerTitle.text = exertit
     }
     
 

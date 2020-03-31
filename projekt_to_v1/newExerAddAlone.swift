@@ -9,7 +9,13 @@
 import UIKit
 
 class newExerAddAlone: UIViewController {
-
+    
+    var titlle = String()
+    @IBOutlet weak var textField: UITextField!
+    @IBAction func confirmAdding(_ sender: Any) {
+        DBManager.shared.insertExercise1(insertExer: textField.text ?? "NULL", title: titlle)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

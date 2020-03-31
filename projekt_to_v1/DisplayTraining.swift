@@ -8,14 +8,116 @@
 
 import UIKit
 
-class DisplayTraining: UIViewController {
+struct cell {
+    var opened = Bool()
+    var title = String()                //exercise
+    var sectionData = [String]()        //weight x repeats
+    var numberOfSet = [Int]()
+    var weight = [Double]()
+    var repeats = [Double]()
+    var iDS = [Int]()
+    
+}
 
+func loadTraining(nameTraining: String) -> [cell]{
+    if DBManager.shared.openDatabase() {
+        var tableViewData = [cell]()
+        let exerNames: [String] = DBManager.shared.selectExercisesFromTraining(title: nameTraining)
+        for word in exerNames{
+            print(word)
+            let idExer: Int = DBManager.shared.selectIdFromExercise(name: word)
+            print (idExer)
+            let weight:[Double] = DBManager.shared.selectWeightFromSets(index: idExer)
+            let repeats:[Double] = DBManager.shared.selectRepeatsFromSets(index: idExer)
+            let numberOfSet:[Int] = DBManager.shared.selectNumberOFSetFromSets(index: idExer)
+            let IDofSets: [Int] = DBManager.shared.selectIDOFSetFromSets(index: idExer)
+            var weightsRepeats = [String]()
+            for (index1, index11) in zip(weight, repeats) {
+                weightsRepeats.append("\(index1) x \(index11)")
+            }
+            tableViewData.append(cell(opened: false, title: word, sectionData: weightsRepeats,numberOfSet: numberOfSet, weight: weight, repeats: repeats, iDS: IDofSets))
+            
+        }
+        //.append(results.string(forColumn: "id_training") ?? "NULL")
+        return tableViewData
+            
+        }
+
+    return [cell(opened: false, title: "dziala?", sectionData: ["chyba nie"])]
+}
+
+
+class DisplayTraining: UITableViewController {
+
+    var tableViewData = [cell]()
+    var idTraining: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        tableViewData=loadTraining(nameTraining: idTraining)
+        //tableViewData = [cell(opened: false, title: "testTitle1", sectionData: ["testSection1", "testSection2", "testSection3"])]
+        //tableViewData.append(cell(opened: false, title: "testTitle2", sectionData: ["testSection11", "testSection22", "testSection33"]))
+        
     }
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return tableViewData.count
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableViewData[section].opened == true{
+            return tableViewData[section].sectionData.count + 1
+        } else {
+            return 1
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row==0 {
+            guard let cellInView = tableView.dequeueReusableCell(withIdentifier: "cellInView") else {
+                return UITableViewCell()
+            }
+            cellInView.textLabel?.text = tableViewData[indexPath.section].title
+            return cellInView
+        } else {
+            guard let cellInView = tableView.dequeueReusableCell(withIdentifier: "cellInView") else {
+                return UITableViewCell()
+            }
+            var str: String = tableViewData[indexPath.section].sectionData[indexPath.row - 1]
+            str.append(" Set \(tableViewData[indexPath.section].numberOfSet[indexPath.row - 1])")
+            cellInView.textLabel?.text = str
+            //cellInView.textLabel?.text = tableViewData[indexPath.section].sectionData[indexPath.row - 1]
+            return cellInView
+            }
+        }
+        
+        override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            if indexPath.row == 0 {
+                if tableViewData[indexPath.section].opened==true {
+                    tableViewData[indexPath.section].opened=false
+                    let sections = IndexSet.init(integer: indexPath.section)
+                    tableView.reloadSections(sections, with: .none) //animation ?
+                } else {
+                    tableViewData[indexPath.section].opened=true
+                    let sections = IndexSet.init(integer: indexPath.section)
+                    tableView.reloadSections(sections, with: .none) //animation ?
+                }
+            } else {
+                print(tableViewData[indexPath.section].title)
+                print(tableViewData[indexPath.section].sectionData)
+                print(tableViewData[indexPath.section].weight)
+                print(tableViewData[indexPath.section].repeats)
+                print(tableViewData[indexPath.section].iDS)
+                print(tableViewData[indexPath.section].numberOfSet)
+
+                
+                let sc = storyboard?.instantiateViewController(withIdentifier: "DeleteSet") as? DeleteSet
+                sc?.lol=tableViewData[indexPath.section].title
+                self.navigationController?.pushViewController(sc!, animated: true)
+                    //to do delete
+            }
+            
+}
+
 
     /*
     // MARK: - Navigation
