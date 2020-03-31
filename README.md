@@ -10,6 +10,6 @@ Application for saving training scores, based on Storyboard and SQLite.
 * SQLite
 * FMDB
 
-## ScenesPreview
+## Scenes_Preview
 ![screenshot](./tmp/1.png)
 ![screenshot](./tmp/2.png)
