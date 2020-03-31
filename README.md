@@ -1,5 +1,5 @@
 # Training-App
-Application for saving training scores, based on Storyboard and SQLite. 
+Application for saving training scores, written in Swift, based on Storyboard and SQLite. 
 
 ## Table of contents
 * [Technologies](#Technologies)
